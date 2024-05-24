@@ -1,11 +1,14 @@
-import Router from 'express'
-import { Login, Register } from '../controllers/professional.controller.js';
+import Router from 'express';
+import { professionalController } from '../controllers/professional.controller.js';
 
-const router = Router()
+const router = Router();
 
-router.post('/register', Register)
+router.get('/show_prof/:id', professionalController.viewDetail);
+router.post('/register', professionalController.create);
+router.delete('/delete_prof/:id', professionalController.delete);
+router.put('/update_prof/:id', professionalController.actualizar);
 
-router.post('/login', Login)
+
+router.post('/login', professionalController.login);
 
 export default router;
-
