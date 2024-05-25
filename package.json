@@ -19,6 +19,8 @@
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
+    "@types/node": "^20.12.12",
+    "mysql2": "^3.9.7",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   },
@@ -28,6 +30,8 @@
     "express": "^4.19.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   }
 }
