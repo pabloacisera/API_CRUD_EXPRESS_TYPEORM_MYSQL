@@ -1,24 +1,21 @@
-import app from "./app";
+import App from './app';
 import { appDataSource } from "./DATABASE/connection";
+import BaseRoute from './ROUTES/base.Routes';
+import { PORT } from './CONFIG/config'
+
+const app = new App([new BaseRoute()]);
 
 async function main() {
   try {
-    app.listen(process.env.PORT || 6500, () => {
-      console.log(">>>Servidor escuchando en puerto: ", process.env.PORT);
-    });
+    await appDataSource.initialize();
+    console.log("Data Source has been initialized!");
 
-    await appDataSource.initialize()
-      .then(() => {
-        console.log("Data Source has been initialized!");
-      })
-      .catch((err) => {
-        console.error("Error during Data Source initialization:", err);
-      });
+    app.listen()
   } catch (err) {
     if (err instanceof Error) {
-      console.log(err.message);
+      console.error("Error during Data Source initialization:", err.message);
     }
-  }
+  } 
 }
 
 main();
