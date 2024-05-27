@@ -1,6 +1,7 @@
 import express from 'express';
 import { Routes } from './INTERFACE/route.interface';
-import { NODE_ENV, PORT } from './CONFIG/config';
+import { API_VERSION, NODE_ENV, PORT } from './CONFIG/config';
+import {logger} from './UTILIES/logger'; 
 
 class App {
   public app: express.Application;
@@ -11,15 +12,31 @@ class App {
     this.app = express();
     this.env = NODE_ENV || "development";
     this.port = Number(PORT) || 5000;
+
+    this.initializeRoutes(routes);
   }
+
+  /**
+   * initializeRoutes
+routes:Routes[]   */
+  public initializeRoutes(routes:Routes[]) {
+    routes.forEach((route)=>{
+      this.app.use(`/api/${API_VERSION}`, route.router);
+    })
+  }
+
 
   /**
    * listen
    */
   public listen() {
-    
+    this.app.listen(this.port, () => {
+      logger.info('========================================');
+      logger.info(`==========ENV: ${this.env}============`);
+      logger.info(`===App listen on port: ${this.port}===`);
+      logger.info('========================================');
+    });
   }
-
 }
 
 export default App;

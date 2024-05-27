@@ -7,10 +7,9 @@ const app = new App([new BaseRoute()]);
 
 async function main() {
   try {
+    app.listen()
     await appDataSource.initialize();
     console.log("Data Source has been initialized!");
-
-    app.listen()
   } catch (err) {
     if (err instanceof Error) {
       console.error("Error during Data Source initialization:", err.message);

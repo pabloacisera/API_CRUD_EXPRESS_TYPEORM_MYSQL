@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\Developer\\Documents\\Developments\\API_CRUD_EXPRESS_TYPEORM_MYSQL\\src\\logs\\error\\.00347ebf3013c1797f6b793e7c8846531e8b6827-audit.json",
+    "files": [
+        {
+            "date": 1716849666160,
+            "name": "C:\\Users\\Developer\\Documents\\Developments\\API_CRUD_EXPRESS_TYPEORM_MYSQL\\src\\logs\\error\\2024-05-27.log",
+            "hash": "d18d22d94c946daa30b0ab85418d25543f4af88c0ef96b140f5932afbb36842e"
+        }
+    ],
+    "hashType": "sha256"
+}
