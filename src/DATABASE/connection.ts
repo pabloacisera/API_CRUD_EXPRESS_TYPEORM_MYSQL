@@ -13,5 +13,5 @@ export const appDataSource = new DataSource({
   database: "centro_medico",
   entities: [Profesional, Cliente, Resultado, Nomenclatura],
   logging: true,
-  synchronize: true,
+  synchronize: false,
 });

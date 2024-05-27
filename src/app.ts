@@ -9,6 +9,4 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 
-app.use('/v1/', );
-
 export default app;
