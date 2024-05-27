@@ -1,20 +1,46 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import  Profesional  from './profesional.model';
+import { Resultado } from './results.model';
 
 @Entity()
 export class Cliente {
 
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  nombre!: string;
 
   @Column()
-  email: string;
+  apellido!: string;
 
   @Column()
-  password: string;
+  dni!: string;
 
   @Column()
-  area: string;
+  edad!: number;
+
+  @Column()
+  telefono!: string;
+
+  @Column()
+  email!: string;
+
+  @Column()
+  direccion!: string;
+
+  @Column()
+  obrasocial!: string;
+
+  @Column()
+  observaciones!: string;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @ManyToOne(() => Profesional, (profesional: Profesional) => profesional.clientes)
+  profesional!: Profesional;
+
+  @OneToMany(() => Resultado, (resultado: Resultado) => resultado.cliente)
+  resultados!: Resultado[];
 }

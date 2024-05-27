@@ -7,8 +7,7 @@ async function main() {
       console.log(">>>Servidor escuchando en puerto: ", process.env.PORT);
     });
 
-    await appDataSource
-      .initialize()
+    await appDataSource.initialize()
       .then(() => {
         console.log("Data Source has been initialized!");
       })

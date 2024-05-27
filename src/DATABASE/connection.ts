@@ -1,4 +1,8 @@
 import { DataSource } from "typeorm";
+import Profesional from '../MODEL/profesional.model';
+import { Cliente } from '../MODEL/client.model';
+import { Resultado } from '../MODEL/results.model';
+import { Nomenclatura } from '../MODEL/nomen.model';
 
 export const appDataSource = new DataSource({
   type: "mysql",
@@ -7,8 +11,7 @@ export const appDataSource = new DataSource({
   username: "root",
   password: "kayascodelario24",
   database: "centro_medico",
-  entities: [],
+  entities: [Profesional, Cliente, Resultado, Nomenclatura],
   logging: true,
-  /*synchronize: true,*/
+  synchronize: true,
 });
-

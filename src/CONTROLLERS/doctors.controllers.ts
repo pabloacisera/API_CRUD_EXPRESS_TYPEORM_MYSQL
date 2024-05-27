@@ -3,31 +3,13 @@ import { Request, Response } from "express";
 class DoctorsController {
   constructor() {}
 
-  registrar(req: Request, res: Response) {
-
-    const { area, nombre, email, password } = req.body;
-
-    try {
-      res.send('registrando...')
-    } catch (error) {
-      if(error instanceof Error){
-        res.send(500).send(error.message)
-      }
-    }
-  }
-
-  logear(req: Request, res: Response) {
-
-    const { email, password } = req.body;
-
-    try {
-      res.send('logeando...')
-    } catch (error) {
-      if(error instanceof Error){
-        res.send(500).send(error.message)
-      }
-    }
+  /**
+   * registrar
+   */
+  public registrar(req: Request, res: Response): void {
+    // Aquí puedes implementar la lógica para registrar un médico
+    res.status(200).json({ message: 'Registrando médico...' });
   }
 }
 
-export default new DoctorsController;
+export default DoctorsController;
