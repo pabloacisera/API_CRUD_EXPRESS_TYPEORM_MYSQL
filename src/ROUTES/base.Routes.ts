@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { Routes } from "../INTERFACE/route.interface";
 
 class BaseRoute implements Routes{
-  public path = '/';
+  public path = '/home';
   public router = Router();
 
   constructor(){
@@ -20,4 +20,3 @@ class BaseRoute implements Routes{
 }
 
 export default BaseRoute;
-

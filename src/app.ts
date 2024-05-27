@@ -2,6 +2,7 @@ import express from 'express';
 import { Routes } from './INTERFACE/route.interface';
 import { API_VERSION, NODE_ENV, PORT } from './CONFIG/config';
 import {logger} from './UTILIES/logger'; 
+import displayRoutes from 'express-routemap';
 
 class App {
   public app: express.Application;
@@ -31,6 +32,7 @@ routes:Routes[]   */
    */
   public listen() {
     this.app.listen(this.port, () => {
+      displayRoutes(this.app);
       logger.info('========================================');
       logger.info(`==========ENV: ${this.env}============`);
       logger.info(`===App listen on port: ${this.port}===`);
