@@ -2,8 +2,9 @@ import App from './app';
 import { appDataSource } from "./DATABASE/connection";
 import BaseRoute from './ROUTES/base.Routes';
 import { PORT } from './CONFIG/config'
+import { userRoutes } from './ROUTES/user.Routes';
 
-const app = new App([new BaseRoute()]);
+const app = new App([new BaseRoute(), new userRoutes()]);
 
 async function main() {
   try {
