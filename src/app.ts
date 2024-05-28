@@ -9,6 +9,7 @@ import hpp from 'hpp';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser'; // Corrected typo
 import { corsConfig } from './CONFIG/corsConfig';
+import { mySqlConn } from './DATABASE/mysql.conn';
 
 class App {
   public app: express.Application;
@@ -59,8 +60,7 @@ class App {
   }
 
   private connectToDb() {
-    // Implement database connection or leave a comment
-    // Not implemented yet
+    mySqlConn();    
   }
 
   public initializeRoutes(routes: Routes[]) {
