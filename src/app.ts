@@ -21,8 +21,8 @@ class App {
     this.env = NODE_ENV || "development";
     this.port = Number(PORT) || 5000;
 
-    this.initializeRoutes(routes);
     this.initMiddlewares();
+    this.initializeRoutes(routes);
     this.connectToDb();
     this.initSwagger();
     this.initErrorHandling();
@@ -49,7 +49,7 @@ class App {
   }
 
   private initMiddlewares() {
-    this.app.use(morgan(LOG_FORMAT ?? "../logs", { stream }));
+    this.app.use(morgan(LOG_FORMAT || 'combined', { stream })); // Ensure LOG_FORMAT has a default value
     this.app.use(cors(corsConfig));
     this.app.use(hpp());
     this.app.use(helmet());
