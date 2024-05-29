@@ -1,5 +1,10 @@
-class UserServices {
-  constructor() {}
+import { BaseServices } from "../CONFIG/baseServices";
+import Profesional from "../MODEL/profesional.model";
+
+class UserServices extends BaseServices<Profesional>{
+  constructor() {
+    super(Profesional)
+  }
 
   /**
    * userProfile

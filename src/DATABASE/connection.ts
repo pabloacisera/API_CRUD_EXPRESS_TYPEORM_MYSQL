@@ -1,4 +1,4 @@
-import { DataSource, DataSourceOptions, Migration, NamingStrategyNotFoundError } from "typeorm";
+import { DataSource, DataSourceOptions, Migration } from "typeorm";
 import Profesional from '../MODEL/profesional.model';
 import { Cliente } from '../MODEL/client.model';
 import { Resultado } from '../MODEL/results.model';
