@@ -2,6 +2,7 @@ import { DeleteResult } from 'typeorm';
 import { BaseServices } from '../CONFIG/baseServices';
 import { ProfesionalDto } from '../DTO/user.dto';
 import Profesional from '../MODEL/profesional.model';
+import { createHash } from '../UTILIES/hash';
 
 class UserServices extends BaseServices<Profesional> {
   constructor() {
@@ -33,21 +34,38 @@ class UserServices extends BaseServices<Profesional> {
   /**
    * async createProfile
    */
-  public async createProfile(userBody: ProfesionalDto) {
+  public async createProfile(
+    userBody: ProfesionalDto
+  ): Promise<ProfesionalDto | null> {
     try {
       const repository = await this.repository;
-  
-      const newUser = repository.create(userBody);
-  
+
+      const { password, ...restUserBody } = userBody;
+
+      const hashedPass = await createHash(password);
+
+      const newUser = repository.create({
+        ...restUserBody,
+        password: hashedPass,
+      });
+
       const userCreated = await repository.save(newUser);
-  
-      return userCreated;
+
+      const userProfile: ProfesionalDto = {
+        id: userCreated.id,
+        name: userCreated.name,
+        email: userCreated.email,
+        password: userCreated.password,  
+        area: userCreated.area,
+        createdAt: userCreated.createdAt,
+      };
+
+      return userProfile;
     } catch (error) {
       console.error('Error al crear el perfil del usuario:', error);
       return null;
     }
   }
-  
 
   /**
    * async updateProfile
@@ -81,21 +99,20 @@ class UserServices extends BaseServices<Profesional> {
   public async deleteProfile(id: number): Promise<DeleteResult | null> {
     try {
       const repository = await this.repository;
-  
+
       const user = await repository.findOne({ where: { id } });
-  
+
       if (!user) {
         return null;
       }
-  
+
       const deleteResult = await repository.delete(id);
       return deleteResult;
     } catch (error) {
-      console.error("Error al eliminar el perfil del usuario: ",  error); 
+      console.error('Error al eliminar el perfil del usuario: ', error);
       return null;
     }
   }
-  
 }
 
 export default UserServices;

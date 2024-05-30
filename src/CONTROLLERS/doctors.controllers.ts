@@ -10,7 +10,7 @@ class DoctorsController {
    */
   public register = async (req: Request, res: Response) => {
     try {
-      const userBody = req.body;  // Corrección aquí
+      const userBody = req.body;  
       const serviceResp = await this.userServices.createProfile(userBody);
       res.status(201).json({ message: "Registro exitoso", user: serviceResp });
     } catch (error) {
@@ -37,7 +37,7 @@ class DoctorsController {
   public updateProfile = async (req: Request, res: Response) => {
     try {
       const { id: userId } = req.params;
-      const updateUserBody = req.body;  // Corrección aquí
+      const updateUserBody = req.body;  
       const serviceResp = await this.userServices.updateProfile(parseInt(userId, 10), updateUserBody);  // Convertir userId a número
       res.status(200).json({
         message: "Perfil del usuario modificado",
