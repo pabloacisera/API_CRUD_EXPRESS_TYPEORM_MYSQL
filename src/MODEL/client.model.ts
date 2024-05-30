@@ -1,6 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 import  Profesional  from './profesional.model';
-import { Resultado } from './results.model';
 
 @Entity()
 export class Cliente {
@@ -41,6 +40,4 @@ export class Cliente {
   @ManyToOne(() => Profesional, (profesional: Profesional) => profesional.clientes)
   profesional!: Profesional;
 
-  @OneToMany(() => Resultado, (resultado: Resultado) => resultado.cliente)
-  resultados!: Resultado[];
 }
