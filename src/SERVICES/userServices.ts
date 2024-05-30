@@ -1,4 +1,6 @@
+import { DeleteResult } from 'typeorm';
 import { BaseServices } from '../CONFIG/baseServices';
+import { ProfesionalDto } from '../DTO/user.dto';
 import Profesional from '../MODEL/profesional.model';
 
 class UserServices extends BaseServices<Profesional> {
@@ -31,27 +33,26 @@ class UserServices extends BaseServices<Profesional> {
   /**
    * async createProfile
    */
-  public async createProfile(userBody: any) {
+  public async createProfile(userBody: ProfesionalDto) {
     try {
       const repository = await this.repository;
-
+  
       const newUser = repository.create(userBody);
-
+  
       const userCreated = await repository.save(newUser);
-
-      return {
-        profile: 'Datos guardados: ',
-        userCreated,
-      };
+  
+      return userCreated;
     } catch (error) {
-      throw new Error('Error al crear el perfil del usuario');
+      console.error('Error al crear el perfil del usuario:', error);
+      return null;
     }
   }
+  
 
   /**
    * async updateProfile
    */
-  public async updateProfile(id: number, updateUserBody: any) {
+  public async updateProfile(id: number, updateUserBody: ProfesionalDto) {
     try {
       const repository = await this.repository;
 
@@ -77,25 +78,24 @@ class UserServices extends BaseServices<Profesional> {
   /**
    * async deleteProfile
    */
-  public async deleteProfile(id: number) {
+  public async deleteProfile(id: number): Promise<DeleteResult | null> {
     try {
       const repository = await this.repository;
-
+  
       const user = await repository.findOne({ where: { id } });
-
+  
       if (!user) {
-        throw new Error('Usuario no encontrado');
+        return null;
       }
-
-      await repository.remove(user);
-
-      return {
-        profile: 'Usuario borrado exitosamente',
-      };
+  
+      const deleteResult = await repository.delete(id);
+      return deleteResult;
     } catch (error) {
-      throw new Error('Error al eliminar el perfil del usuario');
+      console.error("Error al eliminar el perfil del usuario: ",  error); 
+      return null;
     }
   }
+  
 }
 
 export default UserServices;

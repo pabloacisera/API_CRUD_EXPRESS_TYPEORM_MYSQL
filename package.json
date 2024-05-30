@@ -43,6 +43,7 @@
     "@types/helmet": "^4.0.0",
     "@types/hpp": "^0.2.6",
     "bcryptjs": "^2.4.3",
+    "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
