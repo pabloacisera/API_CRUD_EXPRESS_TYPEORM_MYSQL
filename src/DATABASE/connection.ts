@@ -5,7 +5,6 @@ import { Nomenclatura } from '../MODEL/nomen.model';
 import { join } from "path";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 
-
 const configDbConnection: DataSourceOptions = {
   type: "mysql",
   host: "localhost",
@@ -17,10 +16,8 @@ const configDbConnection: DataSourceOptions = {
   logging: true,
   migrationsRun: false,
   synchronize: false,
-  migrations: [join(__dirname, "../**/*.migration(.ts, .js)")],
+  migrations: [join(__dirname, "../migrations{.ts, .js}")],
   namingStrategy: new SnakeNamingStrategy(),
 }
 
 export const AppDataSource: DataSource = new DataSource(configDbConnection)
-
-

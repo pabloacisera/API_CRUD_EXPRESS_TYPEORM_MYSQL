@@ -1,20 +1,26 @@
-import { Request, Response } from "express";
-import UserServices from "../SERVICES/userServices";
+import { Request, Response } from 'express';
+import UserServices from '../SERVICES/userServices';
+import { HttpResponse } from '../RESPONSE/http.response';
 
 class DoctorsController {
-
-  constructor(private readonly userServices: UserServices = new UserServices()) {}
+  constructor(
+    private readonly userServices: UserServices = new UserServices(),
+    private readonly httpResponse: HttpResponse = new HttpResponse()
+  ) {}
 
   /**
    * registrar
    */
   public register = async (req: Request, res: Response) => {
     try {
-      const userBody = req.body;  
+      const userBody = req.body;
       const serviceResp = await this.userServices.createProfile(userBody);
-      res.status(201).json({ message: "Registro exitoso", user: serviceResp });
+      return this.httpResponse.OK(res, serviceResp);
     } catch (error) {
-      res.status(500).json({ message: "Error al registrar el perfil", error});
+      return this.httpResponse.Error(
+        res,
+        'No se ha podido registrar el usuario'
+      );
     }
   };
 
@@ -24,10 +30,13 @@ class DoctorsController {
   public profile = async (req: Request, res: Response) => {
     try {
       const { id: userId } = req.params;
-      const serviceResp = await this.userServices.userProfile(parseInt(userId, 10));  // Convertir userId a número
-      res.status(200).json({ message: "Perfil del usuario", user: serviceResp });
+      const serviceResp = await this.userServices.userProfile(parseInt(userId, 10));
+
+      if (!serviceResp) return this.httpResponse.notFound(res, "No se ha encontrado al usuario");
+
+      return this.httpResponse.OK(res, serviceResp);
     } catch (error) {
-      res.status(500).json({ message: "Error al obtener el perfil", error });
+      return this.httpResponse.Error(res, 'No se ha encontrado al usuario');
     }
   };
 
@@ -37,14 +46,15 @@ class DoctorsController {
   public updateProfile = async (req: Request, res: Response) => {
     try {
       const { id: userId } = req.params;
-      const updateUserBody = req.body;  
-      const serviceResp = await this.userServices.updateProfile(parseInt(userId, 10), updateUserBody);  // Convertir userId a número
-      res.status(200).json({
-        message: "Perfil del usuario modificado",
+      const updateUserBody = req.body;
+      const serviceResp = await this.userServices.updateProfile(parseInt(userId, 10), updateUserBody);
+
+      return this.httpResponse.OK(res, {
+        message: 'Perfil del usuario modificado',
         user: serviceResp,
       });
     } catch (error) {
-      res.status(500).json({ message: "Error al actualizar el perfil", error });
+      return this.httpResponse.Error(res, 'Error al actualizar el perfil');
     }
   };
 
@@ -54,13 +64,14 @@ class DoctorsController {
   public deleteProfile = async (req: Request, res: Response) => {
     try {
       const { id: userId } = req.params;
-      const serviceResp = await this.userServices.deleteProfile(parseInt(userId, 10));  // Convertir userId a número
-      res.status(200).json({
-        message: "Perfil del usuario eliminado",
+      const serviceResp = await this.userServices.deleteProfile(parseInt(userId, 10));
+
+      return this.httpResponse.OK(res, {
+        message: 'Perfil del usuario eliminado',
         user: serviceResp,
       });
     } catch (error) {
-      res.status(500).json({ message: "Error al eliminar el perfil", error });
+      return this.httpResponse.Error(res, 'Error al eliminar el perfil');
     }
   };
 }

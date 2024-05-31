@@ -9,8 +9,11 @@
     "start": "node dist/index.js",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typeorm": "typeorm-ts-node-esm -d ./src/DATABASE/connection.ts",
+    "mig:gen": "npm run typeorm -- migration:generate",
+    "mig:run": "npm run typeorm -- migration:run"
+  },  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -50,6 +53,7 @@
     "fs": "^0.0.1-security",
     "helmet": "^7.1.0",
     "hpp": "^0.2.3",
+    "http-status-codes": "^2.3.0",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",

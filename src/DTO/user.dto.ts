@@ -14,9 +14,6 @@ export class ProfesionalDto {
   @IsNotEmpty()
   password!: string;
 
-  @IsNotEmpty()
-  area!: string;
-
   @IsOptional()
   @IsDate()
   createdAt!: Date;

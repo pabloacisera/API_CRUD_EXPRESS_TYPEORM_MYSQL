@@ -13,105 +13,84 @@ class UserServices extends BaseServices<Profesional> {
    * userProfile
    */
   public async userProfile(id: number) {
-    try {
-      const repository = await this.repository;
-      const user = await repository.findOne({ where: { id } });
+    const repository = await this.repository;
+    const user = await repository.findOne({ where: { id } });
 
-      if (!user) {
-        throw new Error('Usuario no encontrado');
-      }
-
-      return {
-        id,
-        profile: 'profile info: ',
-        user,
-      };
-    } catch (error) {
-      throw new Error('Error al obtener el perfil del usuario');
+    if (!user) {
+      throw new Error('Usuario no encontrado');
     }
+
+    return {
+      id,
+      profile: 'profile info: ',
+      user,
+    };
   }
 
   /**
    * async createProfile
    */
-  public async createProfile(
-    userBody: ProfesionalDto
-  ): Promise<ProfesionalDto | null> {
-    try {
-      const repository = await this.repository;
+  public async createProfile(userBody: ProfesionalDto): Promise<ProfesionalDto | null> {
+    const repository = await this.repository;
 
-      const { password, ...restUserBody } = userBody;
+    const { password, ...restUserBody } = userBody;
 
-      const hashedPass = await createHash(password);
+    const hashedPass = await createHash(password);
 
-      const newUser = repository.create({
-        ...restUserBody,
-        password: hashedPass,
-      });
+    const newUser = repository.create({
+      ...restUserBody,
+      password: hashedPass,
+    });
 
-      const userCreated = await repository.save(newUser);
+    const userCreated = await repository.save(newUser);
 
-      const userProfile: ProfesionalDto = {
-        id: userCreated.id,
-        name: userCreated.name,
-        email: userCreated.email,
-        password: userCreated.password,  
-        area: userCreated.area,
-        createdAt: userCreated.createdAt,
-      };
+    const userProfile: ProfesionalDto = {
+      id: userCreated.id,
+      name: userCreated.name,
+      email: userCreated.email,
+      password: userCreated.password,  
+      createdAt: userCreated.createdAt,
+    };
 
-      return userProfile;
-    } catch (error) {
-      console.error('Error al crear el perfil del usuario:', error);
-      return null;
-    }
+    return userProfile;
   }
 
   /**
    * async updateProfile
    */
   public async updateProfile(id: number, updateUserBody: ProfesionalDto) {
-    try {
-      const repository = await this.repository;
+    const repository = await this.repository;
 
-      const user = await repository.findOne({ where: { id } });
-      if (!user) {
-        throw new Error('No se ha encontrado Id valida');
-      }
-
-      await repository.update(id, updateUserBody);
-
-      const updatedUser = await repository.findOne({ where: { id } });
-
-      return {
-        id,
-        profile: 'Perfil modificado: ',
-        updatedUser,
-      };
-    } catch (error) {
-      throw new Error('Error al actualizar el perfil del usuario');
+    const user = await repository.findOne({ where: { id } });
+    if (!user) {
+      throw new Error('No se ha encontrado Id valida');
     }
+
+    await repository.update(id, updateUserBody);
+
+    const updatedUser = await repository.findOne({ where: { id } });
+
+    return {
+      id,
+      profile: 'Perfil modificado: ',
+      updatedUser,
+    };
   }
 
   /**
    * async deleteProfile
    */
   public async deleteProfile(id: number): Promise<DeleteResult | null> {
-    try {
-      const repository = await this.repository;
+    const repository = await this.repository;
 
-      const user = await repository.findOne({ where: { id } });
+    const user = await repository.findOne({ where: { id } });
 
-      if (!user) {
-        return null;
-      }
-
-      const deleteResult = await repository.delete(id);
-      return deleteResult;
-    } catch (error) {
-      console.error('Error al eliminar el perfil del usuario: ', error);
+    if (!user) {
       return null;
     }
+
+    const deleteResult = await repository.delete(id);
+    return deleteResult;
   }
 }
 
